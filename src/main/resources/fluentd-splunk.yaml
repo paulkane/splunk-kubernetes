@@ -1,0 +1,29 @@
+# vi /etc/kubernetes/manifests/fluentd-splunk.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fluentd-splunk
+  namespace: kube-system
+spec:
+  containers:
+  - name: fluentd-splunk
+    image: paulkane/fluentd-to-splunk:1.1-SNAPSHOT
+    resources:
+      limits:
+        cpu: 100m
+    args:
+    - -q
+    volumeMounts:
+    - name: varlog
+      mountPath: /var/log
+    - name: varlibdockercontainers
+      mountPath: /var/lib/docker/containers
+      readOnly: true
+  terminationGracePeriodSeconds: 30
+  volumes:
+  - name: varlog
+    hostPath:
+      path: /var/log
+  - name: varlibdockercontainers
+    hostPath:
+      path: /var/lib/docker/containers

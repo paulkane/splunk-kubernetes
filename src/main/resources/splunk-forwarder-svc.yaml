@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: splunk-forwarder
+  namespace: kube-system
+  labels:
+    k8s-app: splunk-forwarder
+    kubernetes.io/cluster-service: "true"
+    kubernetes.io/name: "splunk-forwarder"
+spec:
+  ports:
+  - name: management
+    port: 8089
+    protocol: TCP
+    targetPort: management
+  - name: forward
+    port: 514
+    protocol: TCP
+    targetPort: forward
+  selector:
+    k8s-app: splunk-forwarder

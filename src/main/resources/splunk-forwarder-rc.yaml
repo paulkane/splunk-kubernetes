@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: splunk-v6.2-forwarder
+  labels:
+    name: splunk-forwarder
+spec:
+  replicas: 1
+  selector:
+    name: splunk-forwarder
+    version: v6.2-light
+  template:
+    metadata:
+      labels:
+        name: splunk-forwarder
+        version: v6.2-light
+    spec:
+      containers:
+      - name: splunk
+        image: outcoldman/splunk:6.2-forwarder
+        resources:
+          limits:
+            cpu: 100m
+        ports:
+        - containerPort: 514
+          name: forwarder
+          protocol: TCP
+        - containerPort: 8089
+          name: management
+          protocol: TCP
+        env:
+        - name: SPLUNK_FORWARD_SERVER
+          value: "splunk:9997"
