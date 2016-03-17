@@ -16,7 +16,8 @@ This is will create the docker image: paulkane/fluentd-to-splunk:1.1-SNAPSHOT
 
 Place ```fluentd-splunk.yaml``` on your minions. This is a Pod.
 
-```splunk-forward-rc.yaml``` and ```splunk-forward-svc.yaml``` takes the output from fluentd and forwards them to the splunk server defined by ```SPLUNK_FORWARD_SERVER```
+```splunk-forward-rc.yaml``` and ```splunk-forward-svc.yaml``` takes the output from fluentd and uses the splunk API on the forwarder, which in turn forwards the data to ```SPLUNK_FORWARD_SERVER```
+
 ```splunk-rc.yaml``` and ```splunk-svc.yaml``` is the admin UI where you can view the splunk logs.
 
 splunk admin: http://127.0.0.1:30010/
